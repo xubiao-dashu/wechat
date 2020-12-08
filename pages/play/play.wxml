@@ -1,0 +1,27 @@
+<!-- <view class='bg-gradual-pink page'>
+  <cu-custom isBack></cu-custom>
+  <button type="primary" bindtap="audioPlay">播放</button>
+  <button type="primary" bindtap="audioPause">暂停</button>
+</view> -->
+
+<view class="container">
+	<view class='background bg-gradual-pink'>
+		<cu-custom isBack>
+		</cu-custom>
+		<view class='info'>
+			<view>{{audioList[audioIndex].name||""}}</view>
+			<view style="font-size: 24rpx; color: #cacaca;">{{audioList[audioIndex].author||""}}</view>
+		</view>
+		<image class='poster shadow-blur {{playStatus?"rotate":"rotate-paused"}}' mode="scaleToFill" src='{{audioList[audioIndex].poster}}'></image>
+		<view class='progress'>
+			<text>{{progressText}}</text>
+			<slider class='bar' bindchange="sliderChange" bindchanging="sliderChanging" value="{{progress}}" step="1" min='0' max='{{duration}}' activeColor="#1aad19" block-size="12" block-color="#1aad19" />
+			<text>{{durationText}}</text>
+		</view>
+		<view class='buttons'>
+			<image class='button' bindtap='lastMusic' src='../../static/back.png'></image>
+			<image class='button' bindtap='playOrpause' src='{{playStatus?"/../../static/pause.png":"../../static/pause1.png"}}'></image>
+			<image class='button' bindtap='nextMusic' src='../../static/into.png'></image>
+		</view>
+	</view>
+</view>

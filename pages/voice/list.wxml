@@ -1,0 +1,23 @@
+<view class="page bg-gradual-pink">
+	<cu-custom isBack>
+		<view slot="content">治愈电台</view>
+	</cu-custom>
+	<view class="padding-sm" catchtap="play">
+		<view class="padding radius shadow-blur light bg-pink">
+			<view class="text-lg">你若安好，便是晴天</view>
+			<view class="margin-top-sm text-right">播放<text class="lg text-gray" class="cuIcon-playfill"></text></view>
+		</view>
+	</view>
+  <view class="padding-sm">
+		<view class="padding radius shadow-blur light bg-pink">
+			<view class="text-lg">你若安好，便是晴天</view>
+			<view class="margin-top-sm text-right">播放<text class="lg text-gray" class="cuIcon-playfill"></text></view>
+		</view>
+	</view>
+  <view class="padding-sm">
+		<view class="padding radius shadow-blur light bg-pink">
+			<view class="text-lg">你若安好，便是晴天</view>
+			<view class="margin-top-sm text-right">播放<text class="lg text-gray" class="cuIcon-playfill"></text></view>
+		</view>
+	</view>
+</view>
