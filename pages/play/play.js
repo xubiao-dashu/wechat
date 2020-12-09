@@ -1,23 +1,7 @@
-// const audioCtx = wx.createInnerAudioContext({});
-// Page({
-//   onReady: function (e) {
-//     audioCtx.src = this.data.src;
-//   },
-//   data: {
-//     poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
-//     name: '此时此刻',
-//     author: '许巍',
-//     src: 'https://www.daxuzhan.top/demo.mp3',
-//   },
-//   audioPlay: function () {
-//     audioCtx.play()
-//     console.log('实例：', audioCtx)
-//   },
-//   audioPause: function () {
-//     audioCtx.pause()
-//   }
-// })
+
 // pages/play/play.js
+let app = getApp()
+let manager = wx.getBackgroundAudioManager();
 Page({
 
   /**
@@ -29,36 +13,56 @@ Page({
     progress: 0,
     duration: 0,
     audioList: [
-      {
-        name: '《人生路》',
-        epname: '祁隆',
-        author: '祁隆',
-        poster: 'https://www.daxuzhan.top/static/05.jpg',
-        src: 'https://www.daxuzhan.top/demo.mp3'
-
-      }
+      {}
     ],
     showList: true
+  },
+  // 通过id查询音频
+  getVoiceById: function(id) {
+   return new Promise((resolve, reject)=> {
+    wx.request({
+      url: app.globalData.baseUrl+'wechatApi/public/index.php/getVoiceById',
+      data: {
+        id: id
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        resolve(res)
+      }
+    })
+   }) 
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      audioList: this.data.audioList
+    console.log('路由参数：',options)
+    // this.setData({
+    //   audioList: this.data.audioList
+    // })
+    this.getVoiceById(options.id).then((res) => {
+      console.log('接口返回：', res)
+      this.setData({
+        audioList: [res.data]
+      })
+      console.log(this.data.audioList)
+      this.playMusic();
     })
-    this.playMusic();
+
   },
   playMusic: function () {
     let audio = this.data.audioList[this.data.audioIndex];
-    let manager = wx.getBackgroundAudioManager();
-    manager.title = audio.name || "音频标题";
-    manager.epname = audio.epname || "专辑名称";
-    manager.singer = audio.author || "歌手名";
-    manager.coverImgUrl = audio.poster;
+    console.log('播放：', audio)
+    // let manager = wx.getBackgroundAudioManager();
+    manager.title = audio.title || "音频标题";
+    manager.epname = audio.title || "专辑名称";
+    manager.singer = audio.person || "歌手名";
+    manager.coverImgUrl = audio.posterurl;
     // 设置了 src 之后会自动播放
-    manager.src = audio.src;
+    manager.src = audio.voiceurl;
     manager.currentTime = 0;
     let that = this;
     manager.onPlay(function () {
@@ -104,7 +108,7 @@ Page({
   },
   //拖动事件
   sliderChange: function (e) {
-    let manager = wx.getBackgroundAudioManager();
+
     manager.pause();
     manager.seek(e.detail.value);
     this.setData({
@@ -130,7 +134,7 @@ Page({
   },
   //播放按钮
   playOrpause: function () {
-    let manager = wx.getBackgroundAudioManager();
+    // let manager = wx.getBackgroundAudioManager();
     if (this.data.playStatus) {
       manager.pause();
     } else {
@@ -231,7 +235,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+       manager.stop()
   },
 
   /**

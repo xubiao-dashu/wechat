@@ -9,10 +9,10 @@
 		<cu-custom isBack>
 		</cu-custom>
 		<view class='info'>
-			<view>{{audioList[audioIndex].name||""}}</view>
-			<view style="font-size: 24rpx; color: #cacaca;">{{audioList[audioIndex].author||""}}</view>
+			<view style="padding: 14rpx;">{{audioList[audioIndex].title||""}}</view>
+			<view style="font-size: 24rpx; color: #cacaca;">{{audioList[audioIndex].person||""}}</view>
 		</view>
-		<image class='poster shadow-blur {{playStatus?"rotate":"rotate-paused"}}' mode="scaleToFill" src='{{audioList[audioIndex].poster}}'></image>
+		<image class='poster shadow-blur {{playStatus?"rotate":"rotate-paused"}}' mode="scaleToFill" src='{{audioList[audioIndex].posterurl}}'></image>
 		<view class='progress'>
 			<text>{{progressText}}</text>
 			<slider class='bar' bindchange="sliderChange" bindchanging="sliderChanging" value="{{progress}}" step="1" min='0' max='{{duration}}' activeColor="#1aad19" block-size="12" block-color="#1aad19" />

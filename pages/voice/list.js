@@ -1,16 +1,37 @@
 // pages/voice/list.js
+let app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    voiceList: [], // 音频列表
 
   },
   // 播放音频
-  play: function () {
+  play: function(e) {
+    console.log('播放：', e.currentTarget.dataset.id)
+    
     wx.navigateTo({
-      url: '../play/play',
+      url: '../play/play?id='+ e.currentTarget.dataset.id,
+    })
+  },
+  // 获取音频列表
+  getVoiceList: function() {
+    wx.request({
+      url: app.globalData.baseUrl+'wechatApi/public/index.php/voicelist',
+      data: {},
+      header: {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        console.log('列表接口返回：', res)
+        this.setData({
+          voiceList: res.data
+        })
+        console.log(this.data.voiceList)
+      }
     })
   },
 
@@ -18,7 +39,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+      this.getVoiceList();
   },
 
   /**
