@@ -20,7 +20,9 @@
 		</view>
 		<view class='buttons'>
 			<image class='button' bindtap='lastMusic' src='../../static/back.png'></image>
-			<image class='button' bindtap='playOrpause' src='{{playStatus?"/../../static/pause.png":"../../static/pause1.png"}}'></image>
+			<!-- <image class='button' bindtap='playOrpause' src='{{playStatus?"../../static/pause.png":"../../static/pause1.png"}}'></image> -->
+			<image wx:if="{{playStatus}}" class='button' bindtap='playOrpause' src='../../static/pause.png'></image>
+			<image wx:if="{{!playStatus}}" class='button' bindtap='playOrpause' src='../../static/pause1.png'></image>
 			<image class='button' bindtap='nextMusic' src='../../static/into.png'></image>
 		</view>
 	</view>

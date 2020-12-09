@@ -33,7 +33,7 @@ Page({
         name: '《人生路》',
         epname: '祁隆',
         author: '祁隆',
-        poster: '../../static/logo.png',
+        poster: 'https://www.daxuzhan.top/static/05.jpg',
         src: 'https://www.daxuzhan.top/demo.mp3'
 
       }

@@ -7,3 +7,17 @@
 .text-right {
   text-align: right;
 }
+.text-left {
+  text-align: end;
+  font-size: 20rpx;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  margin-bottom: 10px;
+}
+.font-14 {
+  font-size: 28rpx;
+  color:rgb(157, 42, 233) ;
+  width: 100%;
+  /* overflow: scroll;
+  height: 2rem; */
+}
