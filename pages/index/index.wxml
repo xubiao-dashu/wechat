@@ -1,49 +1,64 @@
 <view class="page light bg-pink">
 	<cu-custom>
-		<view slot="content" style="color: orange;">石头治愈屋</view>
+		<view slot="content" style="color: rgb(212, 0, 255);">石头治愈屋</view>
 	</cu-custom>
 	<swiper class="card-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
 		<swiper-item wx:for="{{swiperList}}" wx:key="index" class="{{cardCur==index?'cur':''}}">
-			<view class="swiper-item">
+			<view bind:tap="toUrl" class="swiper-item"  data-id = '{{item.id}}'>
 				<image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
 				<video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
 			</view>
 		</swiper-item>
 	</swiper>
+
 	<view class="flex">
-		<view class="padding-sm flex-sub"  style="width: 40%;">
+		<view class="padding-sm flex-sub"  style="width: 40%;" bind:tap="enter" data-id ='1'>
 			<view class="padding radius shadow-blur bg-gradual-pink text-center">
-				<navigator class="content" hover-class="none" url="../voice/list" >
+				<!-- <navigator class="content" hover-class="none" url="../voice/list" > -->
 					<text class="text-white" style="font-size: 16px">治愈电台</text>
-				</navigator>
+				<!-- </navigator> -->
 			</view>
 		</view>
-		<view class="padding-sm flex-sub"  style="width: 40%;">
+		<view class="padding-sm flex-sub" style="width: 40%;"  bind:tap="enter" data-id ='2'>
 			<view class="padding radius shadow-blur bg-gradual-pink text-center">
-				<navigator class="content" hover-class="none" url="../voice/list" >
-					<text class="text-white" style="font-size: 16px">治愈语录</text>
-				</navigator>
+				<!-- <navigator class="content" hover-class="none" url="../voice/list?type=2" > -->
+					<text class="text-white" style="font-size: 16px">治愈音乐</text>
+				<!-- </navigator> -->
 			</view>
 		</view>
 	</view>
 
 	<view class="flex">
-		<view class="padding-sm flex-sub" catchtap="play" style="width: 40%;">
+
+				<view class="padding-sm flex-sub"  style="width: 40%;"  bind:tap="enter" data-id ='3'>
 			<view class="padding radius shadow-blur bg-gradual-pink text-center">
-				<navigator class="content" hover-class="none" url="../voice/list" >
-					<text class="text-white" style="font-size: 16px">经典老歌</text>
-				</navigator>
+				<!-- <navigator class="content" hover-class="none" url="../voice/list?type=1" > -->
+					<text class="text-white" style="font-size: 16px">治愈美文</text>
+				<!-- </navigator> -->
 			</view>
 		</view>
-		<view class="padding-sm flex-sub" catchtap="play" style="width: 40%;">
+		<view class="padding-sm flex-sub"  style="width: 40%;"  bind:tap="enter" data-id ='4'>
 			<view class="padding radius shadow-blur bg-gradual-pink text-center">
-				<navigator class="content" hover-class="none" url="../voice/list" >
+				<!-- <navigator class="content" hover-class="none" url="../voice/list" > -->
 					<text class="text-white" style="font-size: 16px">每日一签</text>
-				</navigator>
+				<!-- </navigator> -->
 			</view>
 		</view>
 	</view>
-	<view class="cu-card case">
+	<official-account binderror='error' bindload='success'></official-account>
+	<view class="padding-sm" style="font-weight: bold;font-size: 32rpx;border-bottom: 1px solid pink;width: 96%;margin: auto;">最新推荐♪ </view>
+	<view wx:for="{{voiceList}}" wx:key="index">
+	<view class="cu-card case" catchtap="play" data-id="{{item.id}}">
+		<view class="cu-item shadow">
+			<view class="image">
+				<image src="{{item.posterurl}}" mode="widthFix"></image>
+				<view class="cu-tag bg-pink">播放量：{{item.count}}</view>
+				<view class="cu-bar bg-shadeBottom"> <text class="text-cut" style="font-size: 16px; color: orange;"><text style="color: #ffffff;">{{ item.type == 1?'【电台】':item.type == 2?'【音乐】' : '【美文】'}}</text> {{item.title}}</text></view>
+			</view>
+		</view>
+	</view>
+	</view>
+	<!-- <view class="cu-card case">
 		<view class="cu-item shadow">
 			<view class="image">
 				<image src="https://www.daxuzhan.top/static/song.png" mode="widthFix"></image>
@@ -51,8 +66,8 @@
 				<view class="cu-bar bg-shadeBottom"> <text class="text-cut" style="font-size: 16px;">立即进入></text></view>
 			</view>
 		</view>
-	</view>
-	<view class="cu-card case">
+	</view> -->
+	<!-- <view class="cu-card case">
 		<view class="cu-item shadow">
 			<view class="image">
 				<image src="https://www.daxuzhan.top/static/07.jpg" mode="widthFix"></image>
@@ -60,7 +75,7 @@
 				<view class="cu-bar bg-shadeBottom"> <text class="text-cut" style="font-size: 16px;">立即进入></text></view>
 			</view>
 		</view>
-	</view>
+	</view> -->
 
 
 </view>

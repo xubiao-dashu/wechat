@@ -11,37 +11,118 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     cardCur: 0,
-    swiperList: [{
-      id: 0,
-      type: 'image',
-      url: 'https://www.daxuzhan.top/static/04.jpg'
-    }, {
-      id: 1,
-        type: 'image',
-        url: 'https://www.daxuzhan.top/static/02.jpg',
-    }, {
-      id: 2,
-      type: 'image',
-      url: 'https://www.daxuzhan.top/static/03.jpg'
-    }, {
-      id: 3,
-      type: 'image',
-      url: 'https://www.daxuzhan.top/static/05.jpg'
-    }],
+    swiperList: [],
+    // swiperList: [{
+    //   id: 0,
+    //   type: 'image',
+    //   url: 'https://www.daxuzhan.top/static/04.jpg'
+    // }, {
+    //   id: 1,
+    //   type: 'image',
+    //   url: 'https://www.daxuzhan.top/static/02.jpg',
+    // }, {
+    //   id: 2,
+    //   type: 'image',
+    //   url: 'https://www.daxuzhan.top/static/03.jpg'
+    // }, {
+    //   id: 3,
+    //   type: 'image',
+    //   url: 'https://www.daxuzhan.top/static/05.jpg'
+    // }],
+    voiceList: [], // 推荐列表
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
   // 播放音频
-  play: function(){
+  play: function (e) {
+    console.log('播放：', e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: '../play/play',
+      url: '../play/play?id=' + e.currentTarget.dataset.id,
+    })
+  },
+  // 轮播跳转
+  toUrl: function (e) {
+    console.log('跳转：', e)
+    this.data.swiperList.map((item) => {
+      if (item.id == e.currentTarget.dataset.id) {
+        wx.navigateTo({
+          url: item.content,
+        });
+      }
+    });
+    // wx.navigateTo({
+    //   url: e.currentTarget.dataset.to,
+    // })
+  },
+  success: function(e) {
+    console.log('success：', e);
+  },
+  error: function(e) {
+    console.log('fail：', e);
+  },
+  // 获取轮播列表(推荐)
+  getLunList: function () {
+    wx.request({
+      url: app.globalData.baseUrl + 'wechatApi/public/index.php/lunlist',
+      data: {},
+      header: {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        console.log('轮播列表接口返回：', res)
+        let list = [];
+        res.data.map((item) => {
+          list.push({
+            id: item.id,
+            type: 'image',
+            url: item.imgurl,
+            content: item.content
+          });
+        });
+        this.setData({
+          swiperList: list,
+        });
+      }
+    })
+  },
+  // 获取音频列表(推荐)
+  getVoiceList: function () {
+    wx.request({
+      url: app.globalData.baseUrl + 'wechatApi/public/index.php/voicelist4',
+      data: {},
+      header: {
+        'content-type': 'application/json'
+      },
+      success: (res) => {
+        console.log('音频列表接口返回：', res)
+        this.setData({
+          voiceList: res.data,
+        })
+        console.log(this.data.voiceList)
+      }
+    })
+  },
+  // 执行路由跳转
+  enter: function (e) {
+    if (e.currentTarget.dataset.id == 4) {
+      wx.showToast({
+        title: '正在建设中，敬请期待',
+        icon: 'none',
+        duration: 2000
+      })
+      return;
+    }
+    wx.navigateTo({
+      url: '../voice/list?id=' + e.currentTarget.dataset.id,
     })
   },
   onLoad: function () {
+    this.getLunList();
+    this.getVoiceList();
     this.towerSwiper('swiperList');
     // 初始化towerSwiper 传已有的数组名即可
     // if (app.globalData.userInfo) {

@@ -2,6 +2,10 @@
   height: 100vh;
   width: 100%;
 
+
+}
+.image {
+  height: 10rem;
 }
 .text-right {
   text-align: right;

@@ -1,0 +1,14 @@
+<view class="page">
+<view class="bg-gradual-pink">
+    <cu-custom isBack>
+        <view slot="content">{{title}}</view>
+    </cu-custom>
+</view>
+<view>
+    <rich-text nodes="{{content}}"></rich-text>
+</view>
+<view class='cu-load load-modal' wx:if="{{!isLoad}}">
+    <!-- <view class='cuIcon-videofill text-orange'></view> -->
+    <view class='gray-text'>加载中...</view>
+</view>
+</view>

@@ -1,6 +1,6 @@
 <view class="page bg-gradual-pink">
 	<cu-custom isBack>
-		<view slot="content">治愈电台</view>
+		<view slot="content">{{title}}</view>
 	</cu-custom>
 	<view wx:for="{{voiceList}}" wx:key="index">
 		<view class="padding-sm" catchtap="play" data-id="{{item.id}}">
@@ -11,9 +11,14 @@
 				<view style="width: 80vw; padding-left: 20rpx;">
 					<view class="text-left"><text>播放量：{{item.count}}</text></view>
 					<view class="text-lg font-14">{{item.title}}</view>
-					<view class="margin-top-sm text-right">播放<text class="lg text-gray" class="cuIcon-playfill"></text></view>
+					<view wx:if="{{isShow}}" class="margin-top-sm text-right">播放<text class="lg text-gray" class="cuIcon-playfill"></text></view>
+					<view wx:if="{{!isShow}}" class="margin-top-sm text-right">查看 ></view>
 				</view>
 			</view>
 		</view>
 	</view>
+	<view class='cu-load load-modal' wx:if="{{!isLoad}}">
+      <!-- <view class='cuIcon-videofill text-orange'></view> -->
+      <view class='gray-text'>加载中...</view>
+  </view>
 </view>
